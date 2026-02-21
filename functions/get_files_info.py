@@ -1,6 +1,7 @@
 import os
 
 def get_files_info(working_directory, directory="."):
+    content_details = ""
 
     # Ensure the working_directory is an absolute path
     working_dir_path = os.path.abspath(working_directory)
@@ -21,6 +22,13 @@ def get_files_info(working_directory, directory="."):
     
     except ValueError as excpt:
         print(excpt)
+        return excpt
+    
+    # Parse through the directory and build string of content details
+    items = os.path.listdir(full_path)
+    for item in items:
+        item_path = os.path.join(full_path, item)
+
 
 
 if __name__ == "__main__":

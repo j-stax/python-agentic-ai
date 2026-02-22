@@ -2,7 +2,7 @@ import unittest
 from functions.get_files_info import get_files_info
 
 
-class TestYourFunction(unittest.TestCase):
+class TestGetFilesInfo(unittest.TestCase):
     def test_get_files_info(self):
         print("Result for current directory:")
         get_files_info("calculator", ".")

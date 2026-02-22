@@ -1,0 +1,39 @@
+import os
+
+def get_file_content(working_directory, file_path):
+    if file_path.startswith("/"):
+        return f'Error: Cannot read "{file_path}" as it is outside the permitted working directory'
+    
+    try:
+        working_dir_abs_path = os.path.abspath(working_directory)
+        file_path_abs = os.path.join(working_dir_abs_path, file_path)
+        valid_file_path = os.path.commonpath([working_dir_abs_path, file_path_abs]) == working_dir_abs_path
+        content = ""
+        MAX_CHARS = 10000
+
+        # Check file_path is outside working_directory
+        if not valid_file_path:
+            print("Error: file path")
+            return f'Error: Cannot read "{file_path}" as it is outside the permitted working directory'
+        
+        # Check file_path leads to an actual file
+        if not os.path.isfile(file_path_abs):
+            return f'Error: File not found or is not a regular file: "{file_path}"'
+        
+        f = open(file_path_abs)
+        content += f.read(MAX_CHARS)
+
+        if f.read(1):
+            content += f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
+        f.close()   
+
+        # print(len(content))
+        # print(content[MAX_CHARS-1:])
+
+        return content
+    except Exception as e:
+        print(e)
+        return f'Error: {e}'
+
+if __name__ == "__main__":
+    get_file_content('calculator', 'calculator/calculator.py')    

@@ -33,7 +33,7 @@ def get_file_content(working_directory, file_path):
         return content
     except Exception as e:
         print(e)
-        return f'Error: {e}'
+        return f'Error: reading from file: {e}'
 
 if __name__ == "__main__":
     get_file_content('calculator', 'calculator/calculator.py')    

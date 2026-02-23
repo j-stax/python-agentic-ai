@@ -36,7 +36,7 @@ def get_files_info(working_directory, directory="."):
             item_path = os.path.join(target_dir, item)
             print(f'- {item}: file_size={os.path.getsize(item_path)} bytes, is_dir={os.path.isdir(item_path)}')
     except Exception as e:
-        print(f'Error: {e}')
+        print(f'Error: retrieving file info: {e}')
 
 
 if __name__ == "__main__":

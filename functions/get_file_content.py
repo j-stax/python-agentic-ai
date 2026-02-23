@@ -6,7 +6,7 @@ def get_file_content(working_directory, file_path):
     
     try:
         working_dir_abs_path = os.path.abspath(working_directory)
-        file_path_abs = os.path.join(working_dir_abs_path, file_path)
+        file_path_abs = os.path.normpath(os.path.join(working_dir_abs_path, file_path))
         valid_file_path = os.path.commonpath([working_dir_abs_path, file_path_abs]) == working_dir_abs_path
         content = ""
         MAX_CHARS = 10000

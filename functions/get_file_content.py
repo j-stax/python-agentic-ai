@@ -1,4 +1,5 @@
 import os
+from google.genai import types
 
 def get_file_content(working_directory, file_path):
     if file_path.startswith("/"):
@@ -27,13 +28,26 @@ def get_file_content(working_directory, file_path):
             content += f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
         f.close()   
 
-        # print(len(content))
-        # print(content[MAX_CHARS-1:])
-
         return content
     except Exception as e:
         print(e)
         return f'Error: reading from file: {e}'
+    
+
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
+    description="Return the contents of a file located in a file path relative to the working directory",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="File path to the file being requested, relative to the working directory",
+            ),
+        },
+        required=["file_path"],
+    ),
+)
 
 if __name__ == "__main__":
     get_file_content('calculator', 'calculator/calculator.py')    

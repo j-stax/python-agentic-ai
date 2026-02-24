@@ -1,4 +1,5 @@
 import os, subprocess
+from google.genai import types
 
 def run_python_file(working_directory, file_path, args=None):
     if not file_path.endswith(".py"):
@@ -36,6 +37,30 @@ def run_python_file(working_directory, file_path, args=None):
     except Exception as e:
         return f'Error: executing Python file: {e}'
     
+
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Run the Python file located in the file path, relative to the working directory",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="File path to the file being requested, relative to the working directory",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                items=types.Schema(
+                    type=types.Type.STRING,
+                    description="Argument"
+                ),
+                description="Optional list of arguments to pass to the Python file (e.g., function)",
+            ),
+        },
+        required=["file_path"],
+    ),
+)
+
 
 if __name__ == '__main__':
     res = run_python_file("calculator", "main.py", ["3 + 5"])

@@ -1,5 +1,6 @@
 import os
 from google.genai import types
+from config import MAX_CHARS
 
 def get_file_content(working_directory, file_path):
     if file_path.startswith("/"):
@@ -10,7 +11,6 @@ def get_file_content(working_directory, file_path):
         file_path_abs = os.path.normpath(os.path.join(working_dir_abs_path, file_path))
         valid_file_path = os.path.commonpath([working_dir_abs_path, file_path_abs]) == working_dir_abs_path
         content = ""
-        MAX_CHARS = 10000
 
         # Check file_path is outside working_directory
         if not valid_file_path:
@@ -36,13 +36,13 @@ def get_file_content(working_directory, file_path):
 
 schema_get_file_content = types.FunctionDeclaration(
     name="get_file_content",
-    description="Return the contents of a file located in a file path relative to the working directory",
+    description=f"Retrieves the content (at most {MAX_CHARS} characters) of a specified file within the working directory",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
             "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="File path to the file being requested, relative to the working directory",
+                description="Path to the file to read, relative to the working directory",
             ),
         },
         required=["file_path"],
